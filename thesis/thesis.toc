@@ -1,13 +1,11 @@
 \select@language {ngerman}
 \contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.1}
-\contentsline {chapter}{\numberline {2}Grundlagen}{2}{chapter.2}
-\contentsline {chapter}{\numberline {3}Verwandte Arbeiten}{3}{chapter.3}
-\contentsline {chapter}{\numberline {4}Illustrationen}{4}{chapter.4}
-\contentsline {section}{\numberline {4.1}Bilder}{4}{section.4.1}
-\contentsline {section}{\numberline {4.2}Tabellen}{4}{section.4.2}
-\contentsline {section}{\numberline {4.3}Formeln}{5}{section.4.3}
-\contentsline {section}{\numberline {4.4}Quellcode}{5}{section.4.4}
-\contentsline {section}{\numberline {4.5}Text}{6}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Weiterf\IeC {\"u}hrendes}{6}{subsection.4.5.1}
-\contentsline {chapter}{\numberline {5}Evaluation}{7}{chapter.5}
-\contentsline {chapter}{\numberline {6}Fazit / Zusammenfassung}{8}{chapter.6}
+\contentsline {chapter}{\numberline {2}Einf\IeC {\"u}hrung in Projektionen}{2}{chapter.2}
+\contentsline {section}{\numberline {2.1}Allgemeines}{2}{section.2.1}
+\contentsline {section}{\numberline {2.2}Kategorisierung von Projektionen}{2}{section.2.2}
+\contentsline {paragraph}{\nonumberline Azimutalprojektion}{2}{section*.2}
+\contentsline {paragraph}{\nonumberline Konische Projektion}{3}{section*.5}
+\contentsline {paragraph}{\nonumberline Zylindrische Projektion}{4}{section*.8}
+\contentsline {paragraph}{\nonumberline Pseudozylindrische Projektion}{4}{section*.11}
+\contentsline {paragraph}{\nonumberline Zusammengesetzte Projektion}{5}{section*.13}
+\contentsline {paragraph}{\nonumberline Anmerkung}{5}{section*.15}

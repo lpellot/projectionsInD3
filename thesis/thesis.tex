@@ -20,6 +20,8 @@
 \usepackage[ngerman]{babel}
 %% \usepackage[english]{babel}
 
+\usepackage{float}
+
 % Fonts
 \renewcommand{\sfdefault}{phv}
 \renewcommand{\rmdefault}{phv}
@@ -42,12 +44,7 @@
 \includeonly{
 template/definitions,
 chapters/introduction,
-chapters/basics,
-chapters/related-work,
-chapters/content,
-chapters/evaluation,
-chapters/conclusion,
-chapters/appendix
+chapters/theory
 }
 
 % Definitions for code listings
@@ -72,11 +69,8 @@ chapters/appendix
 \mainmatter %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagenumbering{arabic}
 \include{chapters/introduction}
-\include{chapters/basics}
-\include{chapters/related-work}
-\include{chapters/content}
-\include{chapters/evaluation}
-\include{chapters/conclusion}
+\include{chapters/theory}
+\include{chapters/projections-in-d3}
 
 \backmatter %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
