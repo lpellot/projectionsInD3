@@ -2,3 +2,30 @@
 \BOOKMARK [0][]{chapter.2}{2 Einf\374hrung in Projektionen}{}% 2
 \BOOKMARK [1][-]{section.2.1}{2.1 Allgemeines}{chapter.2}% 3
 \BOOKMARK [1][-]{section.2.2}{2.2 Kategorisierung von Projektionen}{chapter.2}% 4
+\BOOKMARK [0][]{chapter.3}{3 Projektionen in D3.js}{}% 5
+\BOOKMARK [1][-]{section.3.1}{3.1 GeoJSON}{chapter.3}% 6
+\BOOKMARK [2][-]{subsection.3.1.1}{3.1.1 Genereller Aufbau einer JSON-Datei}{section.3.1}% 7
+\BOOKMARK [2][-]{subsection.3.1.2}{3.1.2 Repr\344sentation eines einzelnen Elements in GeoJSON}{section.3.1}% 8
+\BOOKMARK [2][-]{subsection.3.1.3}{3.1.3 Repr\344sentation von Koordinaten in GeoJSON}{section.3.1}% 9
+\BOOKMARK [2][-]{subsection.3.1.4}{3.1.4 M\366gliche Elemente in GeoJSON}{section.3.1}% 10
+\BOOKMARK [2][-]{subsection.3.1.5}{3.1.5 Gegen\374berstellung mit TopoJSON}{section.3.1}% 11
+\BOOKMARK [1][-]{section.3.2}{3.2 Projektionsfunktion}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.3}{3.3 Pfadfunktion}{chapter.3}% 13
+\BOOKMARK [0][]{chapter.4}{4 Erstellen einer Landkarte in D3.js}{}% 14
+\BOOKMARK [1][-]{section.4.1}{4.1 Allgemeines}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.2}{4.2 Anlegen von Projektions- und Pfadfunktion}{chapter.4}% 16
+\BOOKMARK [1][-]{section.4.3}{4.3 Einlesen und Verarbeiten der zu projizierenden Daten}{chapter.4}% 17
+\BOOKMARK [0][]{chapter.5}{5 Choreoplethen-Karten}{}% 18
+\BOOKMARK [1][-]{section.5.1}{5.1 Allgemeines}{chapter.5}% 19
+\BOOKMARK [1][-]{section.5.2}{5.2 Implementierung in D3.js}{chapter.5}% 20
+\BOOKMARK [2][-]{subsection.5.2.1}{5.2.1 Problematik bzgl. bisherigem Ansatz}{section.5.2}% 21
+\BOOKMARK [2][-]{subsection.5.2.2}{5.2.2 Implementierungsansatz zur Bew\344ltigung}{section.5.2}% 22
+\BOOKMARK [2][-]{subsection.5.2.3}{5.2.3 Einf\344rbung der Landkarte}{section.5.2}% 23
+\BOOKMARK [0][]{chapter.6}{6 Evaluation}{}% 24
+\BOOKMARK [0][]{chapter.7}{7 Illustrationen}{}% 25
+\BOOKMARK [1][-]{section.7.1}{7.1 Bilder}{chapter.7}% 26
+\BOOKMARK [1][-]{section.7.2}{7.2 Tabellen}{chapter.7}% 27
+\BOOKMARK [1][-]{section.7.3}{7.3 Formeln}{chapter.7}% 28
+\BOOKMARK [1][-]{section.7.4}{7.4 Quellcode}{chapter.7}% 29
+\BOOKMARK [1][-]{section.7.5}{7.5 Text}{chapter.7}% 30
+\BOOKMARK [2][-]{subsection.7.5.1}{7.5.1 Weiterf\374hrendes}{section.7.5}% 31

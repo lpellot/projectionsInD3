@@ -1,95 +1,163 @@
-%% basics.tex
+%% projections-in-d3js.tex
 %%
-\chapter{Einführung in Projektionen}
+\chapter{Projektionen in D3.js}
+\label{ch:projections-in-d3js}
 
-\section{Allgemeines}
+Projektionen in D3.js haben drei wesentliche Bestandteile, welche im Folgenden genauer erläutert werden:
 
-Will man einen Ausschnitt der Oberfläche einer Sphäre, beispielsweise ein Land auf dem Erdball, auf einer ebenen Oberfläche wie einem Bildschirm oder einem Blatt Papier darstellen, so muss eine Funktion aufgestellt werden, die einen dreidimensionalen Punkt (üblicherweise erfolgt die Darstellung hier durch ein Paar aus Breiten- und Längengrad) in einen zweidimensionalen Punkt umwandelt. Eine solche Funktion nennt man Projektion.
+\begin{itemize}
+    \item Geographische Daten
+            \\Müssen im Format GeoJSON oder TopoJSON vorliegen
+    \item Projektionsfunktion
+            \\Dient zur Projektion eines einzelnen Punktes
+    \item Pfadfunktion
+            \\Verallgemeinert die Projektion eines einzelnen Punktes auf die Projektion einer topologischen Struktur
+\end{itemize}
 
-Hierbei ist zu beachten, dass mit dem Verlust einer räumlichen Dimension bei der Anwendung einer Projektion stets ein gewisser Informationsverlust beziehungsweise eine -verfälschung einhergeht. Betroffen sein können hierbei der Flächeninhalt der projizierten Struktur, die Länge einer Strecke innerhalb dieser, oder Winkel innerhalb eines Streckenverlaufs. Bewerkstelligt es eine Projektion, bei mehreren projizierten Strukturen eine der genannten Eigenschaften für alle Strukturen um einen konstanten Faktor verzerrt (üblicherweise verkleinert) wiederzugeben, wird diese Projektion flächen-/längen-/winkeltreu genannt.
+\section{GeoJSON}
 
-\section{Kategorisierung von Projektionen}
+GeoJSON ist ein offenes Format, um geografische Daten zu repräsentieren. Es verwendet die JavaScript Object Notation (kurz: JSON) und ist aufgrund der hohen Verbreitung und Unterstützung durch viele Programmiersprachen im Allgemeinen und JavaScript im Speziellen bestens für die Verarbeitung der enthaltenen Daten geeignet.
 
-Projektionen können in folgende Kategorien eingeteilt werden:
+Wie bei jedem JSON-Objekt besteht auch ein GeoJSON-Objekt aus diversen Schlüssel-Wert-Paaren. Es existieren zwingend erforderliche Schlüssel, die Werte zu diesen Schlüsseln sind allerdings variabel bzw. können einem gewissen Wertebereich oder einer Menge entstammen. Welche Einschränkungen dabei vorliegen, wird im Folgenden erläutert.
 
-\paragraph{Azimutalprojektion}
+\subsection{Genereller Aufbau einer JSON-Datei}
 
-Bei einer Azimutalprojektion wird die Sphäre ohne Zwischenschritte direkt auf eine Ebene projiziert.
+Der erste erforderliche Schlüssel ist "type". Je nachdem, ob man lediglich ein einzelnes Element oder mehrere Elemente repräsentieren will, kann er einen von zwei Werten annehmen.
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/azimuthalEqualArea}
-    \caption{Flächentreue Azimutalprojektion}
-\end{figure}
+\begin{itemize}
+    \item Soll lediglich ein einzelnes Element repräsentiert werden, muss "type\" den Wert "Feature" haben.
+            \\ In diesem Fall muss außerdem der zweite Schlüssel zwingend "geometry" lauten Dessen Wert ist dann die GeoJSON-konforme Repräsentation eines einzelnen Elements.
+    \item Sollen mehrere Elemente, wie verschiedene Länder eines Kontinents, repräsentiert werden, muss "type\" den Wert "FeatureCollection\" haben.
+            \\ In diesem Fall muss außerdem der zweite Schlüssel zwingend "features" lauten. Dessen Wert ist ein Array an einzelnen Elementen, also GeoJSON-Objekten, bei denen der Schlüssel "type" den Wert "Feature" hat).
+\end{itemize}
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/azimuthalEquidistant}
-    \caption{Längentreue Azimutalprojektion}
-\end{figure}
+Optional kann außerdem auf dieser Ebene der Schlüssel "bbox\" angelegt werden. Dessen Wert ist dann ein Array mit vier Elementen, wobei die ersten zwei Elemente den südwestlichen und die zweiten zwei Elemente den nordöstlichen Eckpunkt eines Rechtecks darstellen, das alle Punkte des repräsentierten Elements beziehungsweiser aller zu repräsentierenden Elemente beinhaltet.
 
-\paragraph{Konische Projektion}
+\subsection{Repräsentation eines einzelnen Elements in GeoJSON}
 
-Bei einer konischen Projektion wird die Sphäre zunächst auf einen Kegel projiziert. Dieser wird dann aufgeschnitten und auf eine Ebene ausgerollt.
+Zur Repräsentation eines einzelnen Elements in GeoJSON werden mindestens zwei Schlüssel benötigt. Diese lauten:
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/conicEqualArea}
-    \caption{Flächentreue konische Projektion}
-\end{figure}
+\begin{itemize}
+    \item "type"
+            \\ Der Wert dieses Schlüssels ist der Typ des zu repräsentierenden Elements als String.
+    \item "coordinates"
+            \\ Der Wert dieses Schlüssels sind die Koordinaten, die das entsprechende Element repräsentieren.
+\end{itemize}
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/conicEquidistant}
-    \caption{Längentreue konische Projektion}
-\end{figure}
+Optional kann außerdem der Schlüssel "properties" hinzugefügt werden, dessen Wert kann wiederum ein beliebiges JSON-Objekt sein. So wird unter Anderem das Setzen beliebiger Kennzahlen bezüglich des entsprechenden Objekts ermöglicht (Beispiel: Einwohnerzahl oder Bruttoinlandsprodukt pro Land).
 
-\paragraph{Zylindrische Projektion}
+\subsection{Repräsentation von Koordinaten in GeoJSON}
 
-Bei einer zylindrischen Projektion wird die Sphäre zunächst auf einen Zylinder projiziert. Dieser wird dann aufgeschnitten und auf eine Ebene ausgerollt.
+Geographische Koordinaten werden in GeoJSON als Array mit zwei Werten in der Form [Längengrad, Breitengrad], im Folgenden auch als Koordinatenpaar bezeichnet, definiert. Zu beachten ist hier, dass Längen- und Breitengrad im Vergleich zu sonstigen Anwendungen und Notationen vertauscht werden.
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/equirectangular}
-    \caption{Längentreue Zylinderprojektion}
-\end{figure}
+\subsection{Mögliche Elemente in GeoJSON}
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/mercator}
-    \caption{Winkeltreue Zylinderprojektion}
-\end{figure}
+GeoJSON unterstützt folgende Elemente:
 
-\paragraph{Pseudozylindrische Projektion}
+\begin{itemize}
+    \item Point
+        \begin{itemize}
+            \item Wird genutzt, um einen einzelnen Punkt zu repräsentieren
+            \item Koordinaten: Koordinatenpaar
+        \end{itemize}
+    \item LineString
+        \begin{itemize}
+            \item Wird genutzt, um (geknickte) Strecken(-verläufe) darzustellen
+            \item Koordinaten: Array mit beliebig vielen Koordinatenpaaren
+        \end{itemize}
+    \item Polygon
+        \begin{itemize}
+            \item Wird genutzt, um geschlossene Flächen darzustellen
+            \item Koordinaten: Array mit bis zu zwei Arrays, die wiederum beliebig viele Koordinatenpaare beinhalten
+                    \\ Zweiter Satz an Koordinatenpaaren wird genutzt, um "Löcher\" in der Struktur, den der erste Satz beschreibt, wiederzuspiegeln
+        \end{itemize}
+\end{itemize}
 
-Pseudozylindrische Projektionen stellen eine Verallgemeinerung zylindrischer Projektionen dar. Breitengrade werden ebenso als parallele Linien projiziert, allerdings sind Höhengrade der konkreten Projektion entsprechend geneigt.
+Außerdem kann jedes einteilige Element auch mit anderen einteiligen Elementen vom selben Typ dargestellt werden. Dem Namen des Elements wird dann "Multi" vorangestellt (also MultiPoint, MultiLineString, MultiPolygon), die Koordinaten bestehen dann aus einem Array, dessen Elemente Koordinaten gemäß den Vorgaben des entsprechenden einteiligen Elements sind.
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/naturalEarth1}
-    \caption{\glqq Natural Earth\grqq -Projektion}
-\end{figure}
+\subsection{Gegenüberstellung mit TopoJSON}
 
-\paragraph{Zusammengesetzte Projektion}
+TopoJSON stellt einen alternativen Weg dar, um geographische Daten standardisiert zu speichern. Es lassen sich folgende Unterschiede sowie Vor- und Nachteile feststellen:
 
-Zusammengesetzte Projektionen kombinieren verschiedene der oben genannten Projektionen. Im Gegensatz zu den anderen Kategorien werden zusammengesetzte Projektionen selten für die Darstellung der gesamten Welt, sondern häufiger lediglich für Ausschnitte ebendieser genutzt.
+\begin{tabular}{p{0.2\textwidth} | p{0.33\textwidth} | p{0.33\textwidth}}
+    & 
+    GeoJSON 
+    & TopoJSON \\\hline
+    Speicherung von Strukturen 
+    & \begin{itemize}
+        \item Explizite Speicherung des Pfades für jedes Element
+        \item Pfade werden bei aneinandergrenzenden Elementen mehrfach gespeichert
+    \end{itemize} 
+    & \begin{itemize}
+        \item Alle genutzten Pfade werden genau einmal gespeichert
+        \item Zusätzlich Information für jedes Element, welche Pfade es nutzt
+    \end{itemize} \\\hline
+    Vorteil 
+    & Einfachere Datenstruktur
+    & Kleinere Dateigröße \\\hline
+    Nachteil
+    & Ggf. wesentlich umfangreichere Datei 
+    & \begin{itemize}
+        \item Komplexere Dateistruktur
+        \item Ggf. weitere Bibliotheken zur Verarbeitung erforderlich
+    \end{itemize} \\
+\end{tabular}
 
-\begin{figure}[H]
-    \centering
-    
-    \includegraphics[width=.5\textwidth]{images/albersUSA}
-    \caption{Albers-USA-Projektion}
-\end{figure}
+\section{Projektionsfunktion}
 
-Hier wird die Albers-USA-Projektion gezeigt, die den Hauptteil der USA als konische Projektion, allerdings aus Platzgründen Alaska und Hawaii in der linken unteren Ecke um einen Faktor von etwa $0.35$ verkleinert als zylindrische Projektion darstellt.
+In D3.js wird die Funktionalität, einen bestimmten Punkt von einer Sphäre auf eine Ebene zu projizieren, von einer sogenannten Projektionsfunktion übernommen. Diverse etablierte Projektionen wie die Merkator- oder die Rektangularprojektion werden von D3.js bereits 'ab Werk' im Modul d3-geo mitgeliefert. Viele weitere (exotischere) Projektionen sind ebenfalls vordefiniert und können über das Paket d3-geo-projections nachgeladen werden.
 
-\paragraph{Anmerkung}
+Auf Projektionen können diverse Funktionen aufgerufen werden, um die Ausgabe zu gestalten. Es folgt ein Auszug aus diesen:
 
-Bei Betrachtung der Abbildungen fällt auf, dass keine der Kategorien Treue hinsichtlich einer Eigenschaft bedingt oder fördert, und diese lediglich der Optik dienlich sind.
+\begin{itemize}
+    \item projection(point)
+            \begin{itemize}
+                \item Gibt ein Array mit den Koordinaten des projizierten Punktes (in Pixel) zurück
+                \item point: Koordinatenpaar
+            \end{itemize}
+    \item projection.invert(point)
+            \begin{itemize}
+                \item 'Umkehrfunktion' zu projection(point)
+            \end{itemize}
+    \item projection.translate([tx, ty])
+            \begin{itemize}
+                \item Versetzt die Koordinaten des projizierten Punktes um die Koordinaten tx und ty entlang der entsprechenden Achsen
+                \item Versatz bezieht sich auf Mittelpunkt der Projektion
+                \item Falls keine Werte übergeben werden, wird der aktuell festgelegte Versatz zurückgegeben (Standardwert: [480, 250])
+            \end{itemize}
+    \item projection.center([longitude, latitude])
+            \begin{itemize}
+                \item Setzt den Mittelpunkt der Projektion auf den übergebenen Punkt um
+                \item Falls keine Werte übergeben werden, wird der aktuell festgelegte Mittelpunkt zurückgegeben (Standardwert: [0, 0])
+            \end{itemize}
+    \item projection.scale(scale)
+            \begin{itemize}
+                \item Skaliert die Koordinaten des projizierten Punktes um den übergebenen Faktor
+                \item Falls kein Wert übergeben wird, wird der aktuell festgelegte Skalierungsfaktor zurückgegeben
+            \end{itemize}
+\end{itemize}
+
+\section{Pfadfunktion}
+
+Die Pfadfunktion dient in D3.js dazu, statt lediglich der Projektion einzelner Punkte die Projektion beliebiger (in GeoJSON oder TopoJSON vorhandener) Strukturen zu ermöglichen.
+
+Wie auf Projektionsfunktionen können auch auf Pfadfunktionen diverse Funktionen aufgerufen werden. Es folgt ein Auszug aus diesen:
+
+\begin{itemize}
+    \item d3.geoPath(projection)
+            \begin{itemize}
+                \item Erzeugt eine neue Pfadfunktion, die gemäß der übergebenen Projektionsfunktion Elemente abbildet
+                \item Wird keine Projektionsfunktion übergeben, wird standardmäßig d3.geoAlbersUSA() (die Albers-USA-Projektion) genutzt
+            \end{itemize}
+    \item path.projection(projection)
+            \begin{itemize}
+                \item Ändert die von path genutzte Projektionsfunktion auf die übergebene
+                \item Wird keine Projektionsfunktion übergeben, wird stattdessen die aktuell genutzte Projektionsfunktion übergeben
+            \end{itemize}
+    \item path(object)
+            \begin{itemize}
+                \item zeichnet das übergebene GeoJSON-/TopoJSON-Objekt gemäß der gesetzten Projektionsfunktion als SVG-Pfad
+            \end{itemize}
+\end{itemize}
+
+
