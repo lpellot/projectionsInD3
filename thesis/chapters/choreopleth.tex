@@ -3,6 +3,9 @@
 \chapter{Choreoplethen-Karten}
 \label{choreopleth}
 
+\nocite{blocksmercator:2018}
+\nocite{blockscolombia:2018}
+
 \section{Allgemeines}
 \label{sec:choreopleth-abstract}
 
@@ -41,7 +44,7 @@ d3.json(url, function(geojson){
 
 Um nun noch gemäß der Aufgabenstellung jedes Land entsprechend seiner Kennzahl einfärben zu können, muss eine Farbskala erstellt werden. Beim Zeichnen der Pfade wird dann die jeweilige Füllfarbe mithilfe des Werts der entsprechenden Kennzahl und der Farbskala berechnet und gesetzt.
 
-Der allgemeine Teil und der Teil zum Anlegen von Projektions- und Pfadfunktion gestalten sich erneut wie in \ref{sec:map-abstract} und \ref{sec:map-setup} beschrieben. Danach folgt das Einlesen der Datei und Einfärben der Pfade wie folgt:
+Der allgemeine Teil und der Teil zum Anlegen von Projektions- und Pfadfunktion gestalten sich erneut wie in \ref{sec:map-abstract} und \ref{sec:map-setup} beschrieben. Danach folgt das Einlesen der Datei und Einfärben der Pfade wie folgt (Kennzahl ist das Bruttoinlandsprodukt jeden Landes, das in der GeoJSON-Datei über den optionalen Wert "properties" mit übergeben wird)
 
 \begin{lstlisting}
 
@@ -74,3 +77,11 @@ d3.json(url, function(geojson){
 
 \end{lstlisting}
 
+Die entstehende Landkarte hat dieses Aussehen:
+
+\begin{figure}[H]
+    \centering
+    
+    \includegraphics[width=.5\textwidth]{images/mapChoreopleth}
+    \caption{\glqq Natural Earth\grqq -Projektion}
+\end{figure}

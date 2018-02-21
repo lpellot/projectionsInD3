@@ -21,12 +21,25 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeXe: Document Preparation for
-  Beginners and Advanced Users}, 2nd~ed.\hskip 1em plus 0.5em minus 0.4em\relax
-  Wokingham, England: Addison-Wesley Publishing Company, 1995.
+\bibitem{blocksmercator:2018}
+\BIBentryALTinterwordspacing
+M.~Bostock, \emph{Basic D3 map (Mercator) in d3v4}, 2018 (accessed:
+  22.02.2018). [Online]. Available:
+  \url{http://bl.ocks.org/almccon/fe445f1d6b177fd0946800a48aa59c71}
+\BIBentrySTDinterwordspacing
 
-\bibitem{pdfcrop}
-H.~Oberdiek, http://www.ctan.org/tex-archive/support/pdfcrop/, 2002.
+\bibitem{d3api:2018}
+\BIBentryALTinterwordspacing
+------, \emph{D3 API documentation}, 2018 (accessed: 22.02.2018). [Online].
+  Available:
+  \url{https://github.com/d3/d3/blob/master/API.md#geographies-d3-geo}
+\BIBentrySTDinterwordspacing
+
+\bibitem{blockscolombia:2018}
+\BIBentryALTinterwordspacing
+J.~A.~G. Gomez, \emph{GeoJson map of Colombia}, 2018 (accessed: 22.02.2018).
+  [Online]. Available:
+  \url{https://bl.ocks.org/john-guerra/43c7656821069d00dcbc}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

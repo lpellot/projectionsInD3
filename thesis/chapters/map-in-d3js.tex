@@ -3,6 +3,8 @@
 \chapter{Erstellen einer Landkarte in D3.js}
 \label{ch:map-in-d3js}
 
+\nocite{blocksmercator:2018}
+
 Im Folgenden wird gezeigt, wie man eine einfache Landkarte in D3.js erstellen kann. Dieser Prozess kann in drei logische Abschnitte aufgeteilt werden.
 
 \section{Allgemeines}
@@ -56,3 +58,12 @@ d3.json(url, function(geojson){
 });
 
 \end{lstlisting}
+
+Die entstehende Landkarte hat dieses Aussehen:
+
+\begin{figure}[H]
+    \centering
+    
+    \includegraphics[width=.5\textwidth]{images/mapSinglePath}
+    \caption{\glqq Natural Earth\grqq -Projektion}
+\end{figure}
